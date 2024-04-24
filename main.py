@@ -10,19 +10,24 @@ temid=[] # id ваших тем через запятую
 # https://zelenka.guru/threads/6811950/
 # temid=[6682541,6837883,6811950]
 while True:
-    for x in temid:
-        url = "https://api.zelenka.guru/threads/"+str(x)+"/bump"
+    try:
+        for x in temid:
 
-        headers = {
-            "accept": "application/json",
-            "authorization": token
-        }
-        response = requests.post(url, headers=headers)
-        if response.status_code==200 :
-            print(response.text)
-            print("Успешно поднял тему с id",x)
-        else:
-            print("Ошибка поднятия темы с id",x)
-            print(str(json.loads(response.text)["errors"])[2:-2])
-        time.sleep(6)
-    time.sleep(temisleep)
+            url = "https://api.zelenka.guru/threads/"+str(x)+"/bump"
+
+            headers = {
+                "accept": "application/json",
+                "authorization": token
+            }
+            response = requests.post(url, headers=headers)
+            print('Ошибка запроса:',err)
+            if response.status_code==200 :
+                print(response.text)
+                print("Успешно поднял тему с id",x)
+            else:
+                print("Ошибка поднятия темы с id",x)
+                print(str(json.loads(response.text)["errors"])[2:-2])
+            time.sleep(6)
+        time.sleep(temisleep)
+    except Exception as err:
+        print("Произошла неизвестная ошибка:",err)
