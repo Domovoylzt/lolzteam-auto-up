@@ -1,7 +1,7 @@
 import requests
 import time
 import json
-token="Bearer "+"ТУТ ВАШ ТОКЕН АПИ"
+token="Bearer "+"Ваш токен"
 temisleep = 12*3600 # Вместо 12 - раз в сколько часов апать темы (зависит от ваших симп епт)
 temid=[] # id ваших тем через запятую
 # пример
@@ -20,13 +20,13 @@ while True:
                 "authorization": token
             }
             response = requests.post(url, headers=headers)
-            if response.status_code==200 :
-                print(response.text)
-                print("Успешно поднял тему с id",x)
+            inf=json.loads(response.text)
+            if("errors" in inf.keys()):
+                print("Не удалось поднять тему",x,"Причина:",(str(inf["errors"])[2:-2]).replace("<br>\\n"," "))
             else:
-                print("Ошибка поднятия темы с id",x)
-                print(str(json.loads(response.text)["errors"])[2:-2])
+                print("Успешно поднял тему с id",x)
             time.sleep(6)
+        print("Прошел",len(temid),"тем. Ожидаю",temisleep//3600,"часов")
         time.sleep(temisleep)
     except Exception as err:
         print("Произошла неизвестная ошибка: ",err)
