@@ -20,7 +20,6 @@ while True:
                 "authorization": token
             }
             response = requests.post(url, headers=headers)
-            print('Ошибка запроса:',err)
             if response.status_code==200 :
                 print(response.text)
                 print("Успешно поднял тему с id",x)
@@ -30,4 +29,4 @@ while True:
             time.sleep(6)
         time.sleep(temisleep)
     except Exception as err:
-        print("Произошла неизвестная ошибка:",err)
+        print("Произошла неизвестная ошибка: ",err)
